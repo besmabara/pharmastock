@@ -9,7 +9,6 @@ class Fournisseur extends Model
 {
     use HasFactory;
 
-    // Laravel will map this model to 'fournisseurs' table automatically
 
     protected $fillable = [
         'nom',
@@ -18,7 +17,6 @@ class Fournisseur extends Model
 
     public $timestamps = false;
 
-    // Optional: if you want to define relation with medicaments
     public function medicaments()
     {
         return $this->hasMany(Medicament::class, 'fournisseur_id');

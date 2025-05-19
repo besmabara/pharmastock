@@ -35,6 +35,7 @@ class UtilisateursController extends Controller
         $validatedData = $request->validated();
 
         $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['created_at'] = now();
 
         $utilisateur = Utilisateurs::create($validatedData);
 
@@ -63,24 +64,24 @@ class UtilisateursController extends Controller
     /**
      * Update the specified resource in storage.
      */
-public function update(UpdateUtilisateursRequest $request, Utilisateurs $utilisateur)
-{
-    $data = $request->all();
+    public function update(UpdateUtilisateursRequest $request, Utilisateurs $utilisateur)
+    {
+        $data = $request->all();
 
-    if (isset($data['password'])) {
-        $data['password'] = bcrypt($data['password']);
-    } else {
-        // If password is not provided, don't update it — remove from data
-        unset($data['password']);
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            // If password is not provided, don't update it — remove from data
+            unset($data['password']);
+        }
+
+        $utilisateur->update($data);
+
+        return response()->json([
+            'message' => 'Utilisateur updated successfully',
+            'data' => $utilisateur
+        ]);
     }
-
-    $utilisateur->update($data);
-
-    return response()->json([
-        'message' => 'Utilisateur updated successfully',
-        'data' => $utilisateur
-    ]);
-}
 
     /**
      * Remove the specified resource from storage.

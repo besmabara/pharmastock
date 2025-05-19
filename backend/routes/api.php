@@ -36,3 +36,32 @@ Route::post('/login',  function (Request $request) {
         'role' => $user->role,
     ]);
 });
+
+Route::middleware('auth:sanctum')->post('/user/update', function (Request $request) {
+
+    $user = Utilisateurs::where('username', $request->username)->first();
+
+    $data = $request->validate([
+        'username' => 'sometimes|string|max:255',
+        'email' => 'sometimes|string|email|max:255',
+        'password' => 'sometimes|string|min:6',
+    ]);
+
+    if (isset($data['username'])) {
+        $user->username = $data['username'];
+    }
+    if (isset($data['password'])) {
+        $user->password = Hash::make($data['password']);
+    }
+    if (isset($data['email'])) {
+        $user->email = $data['email'];
+    }
+
+
+    $user->save();
+
+    return response()->json([
+        'message' => 'User updated successfully',
+        'user' => $user,
+    ]);
+});

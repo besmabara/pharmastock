@@ -1,10 +1,7 @@
 import { useLocation } from "react-router-dom";
-import { useAtom } from "jotai";
-import { authAtom } from "../../store/authStore";
 
 function Header() {
   const location = useLocation();
-  const [auth] = useAtom(authAtom);
 
   // Map paths to page titles
   const getTitleFromPath = (path) => {
@@ -34,10 +31,10 @@ function Header() {
 
       <div className="flex items-center">
         <span className="hidden md:block text-sm font-medium text-gray-700 mr-2">
-          {auth.user?.name}
+          {localStorage.getItem("username")}
         </span>
         <div className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white text-sm font-medium">
-          {auth.user?.name?.charAt(0).toUpperCase() || "U"}
+          {localStorage.getItem("username")?.charAt(0).toUpperCase() || "U"}
         </div>
       </div>
     </header>

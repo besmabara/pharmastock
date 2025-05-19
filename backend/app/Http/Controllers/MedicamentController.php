@@ -14,8 +14,9 @@ class MedicamentController extends Controller
      */
     public function index()
     {
-        return Medicament::all();
+        return Medicament::with('fournisseur')->get();
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -58,15 +59,28 @@ class MedicamentController extends Controller
      */
     public function update(UpdateMedicamentRequest $request, Medicament $medicament)
     {
-        $medicament->update($request->all());
-
         $type = $request->filled('typeMouvement')
             ? $request->input('typeMouvement')
             : 'Réinitialisation de la quantité';
 
         $note = $request->filled('note')
             ? $request->input('note')
-            : "changement de quantité d'apres utilisateur";
+            : "changement de quantité d'après utilisateur";
+
+        if ($request->filled('quantite')) {
+            $quantite = (int) $request->input('quantite');
+
+            if ($type === 'Réinitialisation de la quantité') {
+                $medicament->quantite = $quantite;
+            } elseif ($type === 'Entrée') {
+                $medicament->quantite += $quantite;
+            } elseif ($type === 'Sortie') {
+                $medicament->quantite -= $quantite;
+            }
+        }
+
+        $medicament->fill($request->except('quantite'));
+        $medicament->save();
 
         MouvementsStock::create([
             'medicament_id'   => $medicament->id,
@@ -77,6 +91,7 @@ class MedicamentController extends Controller
             'created_at'      => now(),
         ]);
     }
+
 
 
     /**

@@ -28,7 +28,6 @@ class MouvementsStock extends Model
         return $this->belongsTo(Medicament::class, 'medicament_id');
     }
 
-    // Relation: mouvement effectué par un utilisateur
     public function utilisateur()
     {
         return $this->belongsTo(Utilisateurs::class, 'utilisateur_id');
