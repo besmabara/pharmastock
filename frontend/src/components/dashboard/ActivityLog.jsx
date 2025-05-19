@@ -6,7 +6,7 @@ function ActivityLog({ activities }) {
     return (
       <div className="card">
         <h2 className="text-lg font-medium text-gray-700 mb-4">Activités récentes</h2>
-        <p className="text-gray-500 text-center py-4">Aucune activité récente</p>
+        <p className="text-gray-500 text-center py-4">Chargement en cours</p>
       </div>
     )
   }

@@ -22,6 +22,7 @@ class UtilisateurResource extends JsonResource
             // Add any other fields you want to expose in the API
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
+            'role' => $this->role,
         ];
     }
 }

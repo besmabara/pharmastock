@@ -1,15 +1,11 @@
 import { useAtom } from 'jotai'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import { medicationsAtom } from '../../store/medicationsStore'
 
-// Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-function StockChart() {
-  const [medications] = useAtom(medicationsAtom)
-  
-  // Get top 5 medications by quantity
+function StockChart({medications}) {
+
   const topMedications = [...medications]
     .sort((a, b) => b.quantity - a.quantity)
     .slice(0, 5)
