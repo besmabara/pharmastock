@@ -64,7 +64,7 @@ pharmastock/
 
 ## Configuration Backend
 
-git clone https://github.com/votre-utilisateur/pharmastock.git
+git clone [https://github.com/besmabara/pharmastock.git]
 cd pharmastock
 cd backend
 
@@ -93,5 +93,7 @@ php artisan serve
 npm install
 
 # Lancer l'application React
+
+npm run dev
 
 npm run dev
